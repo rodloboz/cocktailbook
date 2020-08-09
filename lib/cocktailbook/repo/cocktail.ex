@@ -18,4 +18,8 @@ defmodule Cocktailbook.Repo.Cocktail do
     |> String.split(",")
     |> Enum.count
   end
+
+  def to_list(%Cocktail{ name: name, ingredients: ingredients}) do
+    [name, ingredients]
+  end
 end

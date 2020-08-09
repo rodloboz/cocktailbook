@@ -8,10 +8,10 @@ defmodule Cocktailbook.Routes do
   end
 
   def route(2) do
-    IO.puts "Adding cocktail"
+    CocktailController.create
   end
 
   def route(3) do
-    IO.puts "Removing cocktail"
+    CocktailController.destroy
   end
 end

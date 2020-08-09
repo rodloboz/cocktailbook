@@ -3,6 +3,8 @@ defmodule Cocktailbook.Repo do
 
   alias Cocktailbook.Repo.Cocktail
 
+  @csv_path "../../../data/cocktails.csv"
+
   # def list_cocktails do
   #   [
   #     %Cocktail{ name: "Negroni", ingredients: "1 ounce gin, 1 ounce Campari, 1 ounce sweet vermouth, Garnish: orange peel" },
@@ -14,13 +16,37 @@ defmodule Cocktailbook.Repo do
   #   ]
   # end
 
+  def add_cocktail(%Cocktail{} = cocktail) do
+    load_cocktails()
+    |> List.insert_at(-1, cocktail)
+    |> save_cocktails
+  end
+
+  def remove_cocktail(index) do
+    load_cocktails()
+    |> List.delete_at(index)
+    |> save_cocktails
+  end
+
   def load_cocktails do
-    "../../../data/cocktail.csv"
+    @csv_path
     |> Path.expand(__DIR__)
     |> File.stream!
     |> CSV.decode
     |> Enum.to_list
     |> Enum.map(fn {:ok, [name, ingredients]} -> build_cocktail(name, ingredients) end)
+  end
+
+  defp save_cocktails(cocktails) do
+    file =
+      @csv_path
+      |> Path.expand( __DIR__)
+      |> File.open!([:write, :utf8])
+
+    cocktails
+    |> Enum.map(&Cocktail.to_list(&1))
+    |> CSV.encode
+    |> Enum.each(&IO.write(file, &1))
   end
 
   defp build_cocktail(name, ingredients) do
