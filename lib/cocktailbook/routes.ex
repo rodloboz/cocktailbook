@@ -1,8 +1,10 @@
 defmodule Cocktailbook.Routes do
   @moduledoc false
 
+  alias Cocktailbook.CocktailController
+
   def route(1) do
-    IO.puts "Listing cocktails"
+    CocktailController.list
   end
 
   def route(2) do
