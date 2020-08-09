@@ -6,7 +6,7 @@ defmodule Cocktailbook.CocktailController do
   import Cocktailbook.View, only: [display_cocktails: 1]
 
   def list do
-    Repo.list_cocktails
+    Repo.load_cocktails
     |> display_cocktails
   end
 end
