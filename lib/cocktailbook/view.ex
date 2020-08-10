@@ -6,7 +6,7 @@ defmodule Cocktailbook.View do
   def display_cocktails(cocktails) do
     IO.puts "\nHere's the list of cocktails:\n"
     for {cocktail, index} <- Enum.with_index(cocktails) do
-      IO.puts "#{index + 1} - Name: #{cocktail.name}"
+      IO.puts "#{index + 1} - #{Cocktail.to_string(cocktail)}"
     end
     cocktails
   end

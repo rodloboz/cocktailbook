@@ -34,7 +34,7 @@ defmodule Cocktailbook.Repo do
     |> File.stream!
     |> CSV.decode
     |> Enum.to_list
-    |> Enum.map(fn {:ok, [name, ingredients]} -> build_cocktail(name, ingredients) end)
+    |> Enum.map(fn {:ok, [name, ingredients]} -> Cocktail.build(name, ingredients) end)
   end
 
   defp save_cocktails(cocktails) do
@@ -47,9 +47,5 @@ defmodule Cocktailbook.Repo do
     |> Enum.map(&Cocktail.to_list(&1))
     |> CSV.encode
     |> Enum.each(&IO.write(file, &1))
-  end
-
-  defp build_cocktail(name, ingredients) do
-    %Cocktail{name: name, ingredients: ingredients}
   end
 end
