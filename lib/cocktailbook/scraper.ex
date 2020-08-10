@@ -69,7 +69,7 @@ defmodule Cocktailbook.Scraper do
     |> Floki.parse_document!
     |> Floki.find(".view-content article")
     |> Enum.take(count)
-    |> Enum.map(&parse_article(&1))
+    |> Enum.map(&parse_article/1)
   end
 
   defp parse_article(article) do

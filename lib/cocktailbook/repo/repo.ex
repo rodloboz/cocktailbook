@@ -48,7 +48,7 @@ defmodule Cocktailbook.Repo do
       |> File.open!([:write, :utf8])
 
     cocktails
-    |> Enum.map(&Cocktail.to_list(&1))
+    |> Enum.map(&Cocktail.to_list/1)
     |> CSV.encode
     |> Enum.each(&IO.write(file, &1))
   end
