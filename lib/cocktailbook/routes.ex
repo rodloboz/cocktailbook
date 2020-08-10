@@ -14,4 +14,8 @@ defmodule Cocktailbook.Routes do
   def route(3) do
     CocktailController.destroy
   end
+
+  def route(4) do
+    CocktailController.import
+  end
 end

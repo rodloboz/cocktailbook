@@ -6,6 +6,9 @@ defmodule Cocktailbook.Scraper do
   alias Cocktailbook.Repo.Cocktail
 
   def fetch_cocktails(query, count \\ 5) do
+    query =
+      String.split(query, " ")
+      |> Enum.join("+")
     HTTPoison.start
     response =
       @base_url <> "/search/recipes?query=#{query}"

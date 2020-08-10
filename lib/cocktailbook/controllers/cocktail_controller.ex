@@ -3,16 +3,19 @@ defmodule Cocktailbook.CocktailController do
 
   alias Cocktailbook.Repo
   alias Cocktailbook.Repo.Cocktail
+  alias Cocktailbook.Scraper
 
   import Cocktailbook.View, only: [
     display_cocktails: 1,
+    display_results: 1,
     ask_for_name: 1,
     ask_for_ingredients: 1,
-    ask_for_index: 1
+    ask_for_index: 2,
+    ask_for_search: 0
   ]
 
   def list do
-    Repo.load_cocktails
+    Repo.list_cocktails
     |> display_cocktails
   end
 
@@ -24,9 +27,21 @@ defmodule Cocktailbook.CocktailController do
   end
 
   def destroy do
-    Repo.load_cocktails
+    Repo.list_cocktails
     |> display_cocktails
-    |> ask_for_index
+    |> ask_for_index(:remove)
     |> Repo.remove_cocktail
+  end
+
+  def import do
+    results =
+      ask_for_search()
+      |> Scraper.fetch_cocktails
+      |> display_results
+
+    index = ask_for_index(results, :import)
+    %{ name: _, href: path } = Enum.at(results, index)
+    Scraper.fetch_cocktail(path)
+    |> Repo.add_cocktail
   end
 end

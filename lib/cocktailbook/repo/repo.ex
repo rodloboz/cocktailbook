@@ -16,6 +16,10 @@ defmodule Cocktailbook.Repo do
   #   ]
   # end
 
+  def list_cocktails do
+    load_cocktails()
+  end
+
   def add_cocktail(%Cocktail{} = cocktail) do
     load_cocktails()
     |> List.insert_at(-1, cocktail)
@@ -28,7 +32,7 @@ defmodule Cocktailbook.Repo do
     |> save_cocktails
   end
 
-  def load_cocktails do
+  defp load_cocktails do
     @csv_path
     |> Path.expand(__DIR__)
     |> File.stream!

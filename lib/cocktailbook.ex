@@ -22,28 +22,29 @@ defmodule Cocktailbook do
       1. List Cocktails\n
       2. Add a Cocktail\n
       3. Remove a Cocktail\n
-      4. Quit\n
+      4. Import a Cocktail\n
+      5. Quit\n
     """
   end
 
   defp ask_for_action do
-    IO.gets("\nWhich action? [1-4]\n> ")
+    IO.gets("\nWhich action? [1-5]\n> ")
     |> String.trim
     |> Integer.parse
     |> do_action
   end
 
-  defp do_action({4, ""}) do
+  defp do_action({5, ""}) do
     IO.puts "\n\nGoobye!"
   end
 
-  defp do_action({action, ""}) when action in 1..3 do
+  defp do_action({action, ""}) when action in 1..4 do
     Routes.route(action)
     run()
   end
 
   defp do_action(_) do
-    IO.puts "Please type a valid option: [1-4]"
+    IO.puts "Please type a valid option: [1-5]"
     ask_for_action()
   end
 end
